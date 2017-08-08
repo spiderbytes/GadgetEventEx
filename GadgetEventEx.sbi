@@ -1,0 +1,153 @@
+﻿DeclareModule GadgetEventEx
+  
+  EnableExplicit
+  
+  ;{ EventTypeEx-Constants:
+  #PB_EventTypeEx_Abort = "abort"
+  #PB_EventTypeEx_Blur = "blur"
+  #PB_EventTypeEx_Cancel = "cancel"
+  #PB_EventTypeEx_Canplay = "canplay"
+  #PB_EventTypeEx_Canplaythrough = "canplaythrough"
+  #PB_EventTypeEx_Change = "change"
+  #PB_EventTypeEx_Click = "click"
+  #PB_EventTypeEx_Close = "close"
+  #PB_EventTypeEx_Contextmenu = "contextmenu"
+  #PB_EventTypeEx_Cuechange = "cuechange"
+  #PB_EventTypeEx_Dblclick = "dblclick"
+  #PB_EventTypeEx_Drag = "drag"
+  #PB_EventTypeEx_Dragend = "dragend"
+  #PB_EventTypeEx_Dragenter = "dragenter"
+  #PB_EventTypeEx_Dragleave = "dragleave"
+  #PB_EventTypeEx_Dragover = "dragover"
+  #PB_EventTypeEx_Dragstart = "dragstart"
+  #PB_EventTypeEx_Drop = "drop"
+  #PB_EventTypeEx_Durationchange = "durationchange"
+  #PB_EventTypeEx_Emptied = "emptied"
+  #PB_EventTypeEx_Ended = "ended"
+  #PB_EventTypeEx_Error = "error"
+  #PB_EventTypeEx_Focus = "focus"
+  #PB_EventTypeEx_Input = "input"
+  #PB_EventTypeEx_Invalid = "invalid"
+  #PB_EventTypeEx_Keydown = "keydown"
+  #PB_EventTypeEx_Keypress = "keypress"
+  #PB_EventTypeEx_Keyup = "keyup"
+  #PB_EventTypeEx_Load = "load"
+  #PB_EventTypeEx_Loadeddata = "loadeddata"
+  #PB_EventTypeEx_Loadedmetadata = "loadedmetadata"
+  #PB_EventTypeEx_Loadstart = "loadstart"
+  #PB_EventTypeEx_Mousedown = "mousedown"
+  #PB_EventTypeEx_Mouseenter = "mouseenter"
+  #PB_EventTypeEx_Mouseleave = "mouseleave"
+  #PB_EventTypeEx_Mousemove = "mousemove"
+  #PB_EventTypeEx_Mouseout = "mouseout"
+  #PB_EventTypeEx_Mouseover = "mouseover"
+  #PB_EventTypeEx_Mouseup = "mouseup"
+  #PB_EventTypeEx_Mousewheel = "mousewheel"
+  #PB_EventTypeEx_Pause = "pause"
+  #PB_EventTypeEx_Play = "play"
+  #PB_EventTypeEx_Playing = "playing"
+  #PB_EventTypeEx_Progress = "progress"
+  #PB_EventTypeEx_Ratechange = "ratechange"
+  #PB_EventTypeEx_Reset = "reset"
+  #PB_EventTypeEx_Resize = "resize"
+  #PB_EventTypeEx_Scroll = "scroll"
+  #PB_EventTypeEx_Seeked = "seeked"
+  #PB_EventTypeEx_Seeking = "seeking"
+  #PB_EventTypeEx_Select = "select"
+  #PB_EventTypeEx_Show = "show"
+  #PB_EventTypeEx_Stalled = "stalled"
+  #PB_EventTypeEx_Submit = "submit"
+  #PB_EventTypeEx_Suspend = "suspend"
+  #PB_EventTypeEx_Timeupdate = "timeupdate"
+  #PB_EventTypeEx_Toggle = "toggle"
+  #PB_EventTypeEx_Volumechange = "volumechange"
+  #PB_EventTypeEx_Waiting = "waiting"
+  #PB_EventTypeEx_Auxclick = "auxclick"
+  #PB_EventTypeEx_Gotpointercapture = "gotpointercapture"
+  #PB_EventTypeEx_Lostpointercapture = "lostpointercapture"
+  #PB_EventTypeEx_Pointercancel = "pointercancel"
+  #PB_EventTypeEx_Pointerdown = "pointerdown"
+  #PB_EventTypeEx_Pointerenter = "pointerenter"
+  #PB_EventTypeEx_Pointerleave = "pointerleave"
+  #PB_EventTypeEx_Pointermove = "pointermove"
+  #PB_EventTypeEx_Pointerout = "pointerout"
+  #PB_EventTypeEx_Pointerover = "pointerover"
+  #PB_EventTypeEx_Pointerup = "pointerup"
+  #PB_EventTypeEx_Beforecopy = "beforecopy"
+  #PB_EventTypeEx_Beforecut = "beforecut"
+  #PB_EventTypeEx_Beforepaste = "beforepaste"
+  #PB_EventTypeEx_Copy = "copy"
+  #PB_EventTypeEx_Cut = "cut"
+  #PB_EventTypeEx_Paste = "paste"
+  #PB_EventTypeEx_Search = "search"
+  #PB_EventTypeEx_Selectstart = "selectstart"
+  #PB_EventTypeEx_Wheel = "wheel"
+  #PB_EventTypeEx_Webkitfullscreenchange = "webkitfullscreenchange"
+  #PB_EventTypeEx_Webkitfullscreenerror = "webkitfullscreenerror"
+  ;}
+  
+  Declare.s EventTypeEx() 
+  
+  Declare Bind(Gadget, Callback, EventType.s = "")
+  Declare Unbind(Gadget, Callback, EventType.s = "")
+  
+EndDeclareModule
+
+Module GadgetEventEx
+  
+  EnableExplicit
+
+  Procedure.s GetAllEvents(Gadget)
+    
+    ! var result = [];
+    ! for (var key in spider_GadgetID(v_gadget).gadget) {
+    !   if (key.indexOf('on') === 0) {
+    !     if (key.slice(2)) result.push(key.slice(2));
+    !   }
+    ! }
+    ! return result.join(' ').toLowerCase();
+    
+  EndProcedure
+  
+  Procedure.s EventTypeEx()
+    ! return spider.event.eventTypeEx;
+  EndProcedure
+  
+  Procedure Bind(Gadget, Callback, EventType.s = "")
+    
+    If EventType = ""
+      EventType = GetAllEvents(Gadget)
+    EndIf
+    
+    !	var gadget = spider_GadgetID(v_gadget).gadget;
+    
+    ! v_eventtype.split(" ").forEach(function(eventtype) {
+    !   var handle = gadget.on(eventtype, function(e) {
+    !     e.stopPropagation();
+    !     e.preventDefault();
+    !     spider.event.eventObject = v_gadget;
+    !		  spider.event.eventTypeEx = eventtype;
+    !     return v_callback(e);
+    !   });
+    !   if (handle) gadget[eventtype + "_handle"] = handle;
+    ! });
+    
+  EndProcedure
+  
+  Procedure Unbind(Gadget, Callback, EventType.s = "")
+    
+    If EventType = ""
+      EventType = GetAllEvents(Gadget)
+    EndIf
+    
+    !	var gadget = spider_GadgetID(v_gadget).gadget;
+    
+    ! v_eventtype.split(" ").forEach(function(eventtype) {
+    !   var handle = gadget[eventtype + "_handle"];
+    !   if (handle) handle.remove();
+    !   delete gadget[eventtype + "_handle"];
+    ! });
+    
+  EndProcedure
+  
+EndModule
