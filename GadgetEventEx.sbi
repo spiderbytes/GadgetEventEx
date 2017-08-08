@@ -96,7 +96,7 @@ EndDeclareModule
 Module GadgetEventEx
   
   EnableExplicit
-
+  
   Procedure.s GetAllEvents(Gadget)
     
     ! var result = [];
@@ -115,11 +115,10 @@ Module GadgetEventEx
   
   Procedure Bind(Gadget, Callback, EventType.s = "")
     
-    If EventType = ""
-      EventType = GetAllEvents(Gadget)
-    EndIf
+    If EventType = "" : EventType = GetAllEvents(Gadget) : EndIf
     
     !	var gadget = spider_GadgetID(v_gadget).gadget;
+    !	if (gadget.id == "") gadget = dojo.query(gadget);
     
     ! v_eventtype.split(" ").forEach(function(eventtype) {
     !   var handle = gadget.on(eventtype, function(e) {
@@ -129,23 +128,21 @@ Module GadgetEventEx
     !		  spider.event.eventTypeEx = eventtype;
     !     return v_callback(e);
     !   });
-    !   if (handle) gadget[eventtype + "_handle"] = handle;
+    !   $(gadget).data(eventtype + "_handle", handle);
     ! });
     
   EndProcedure
   
   Procedure Unbind(Gadget, Callback, EventType.s = "")
     
-    If EventType = ""
-      EventType = GetAllEvents(Gadget)
-    EndIf
+    If EventType = "" : EventType = GetAllEvents(Gadget) : EndIf
     
     !	var gadget = spider_GadgetID(v_gadget).gadget;
+    !	if (gadget.id == "") gadget = dojo.query(gadget);
     
     ! v_eventtype.split(" ").forEach(function(eventtype) {
-    !   var handle = gadget[eventtype + "_handle"];
-    !   if (handle) handle.remove();
-    !   delete gadget[eventtype + "_handle"];
+    !   var handle = $(gadget).data(eventtype + "_handle");
+    !   handle.remove();
     ! });
     
   EndProcedure

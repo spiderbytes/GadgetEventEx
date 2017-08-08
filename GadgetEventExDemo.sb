@@ -1,0 +1,40 @@
+﻿XIncludeFile "GadgetEventEx.sbi"
+
+EnableExplicit
+
+Procedure HandleGadgetEventEx(e)
+  
+  Debug "Event " + Str(ElapsedMilliseconds())
+  Debug "EventGadget(): " + EventGadget()
+  Debug "EventTypeEx(): " + GadgetEventEx::EventTypeEx()
+  Debug "-----"
+  
+EndProcedure
+
+Enumeration
+  #Window
+  #StringGadget
+  #TextGadget
+EndEnumeration
+
+OpenWindow(#Window, 0, 0, 512, 512, "GadgetEventExDemo", #PB_Window_SystemMenu | #PB_Window_ScreenCentered)
+
+; -------------------
+
+StringGadget(#StringGadget, 10, 10, 100, 20, "StringGadget")
+
+; bind all possible events for a StringGadget:
+
+GadgetEventEx::Bind(#StringGadget, @HandleGadgetEventEx()) 
+
+; -------------------
+
+TextGadget(#TextGadget, 10, 50, 100, 20, "TextGadget")
+
+; bind all possible events for a TextGadget:
+
+GadgetEventEx::Bind(#TextGadget, @HandleGadgetEventEx())
+
+; unbind MouseMove- and PointerMove-Events:
+
+GadgetEventEx::Unbind(#TextGadget, @HandleGadgetEventEx(), GadgetEventEx::#PB_EventTypeEx_Mousemove + " " + GadgetEventEx::#PB_EventTypeEx_Pointermove)
