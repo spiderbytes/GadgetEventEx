@@ -3,6 +3,7 @@
   EnableExplicit
   
   ;{ EventTypeEx-Constants:
+  #PB_EventTypeEx_All = ""
   #PB_EventTypeEx_Abort = "abort"
   #PB_EventTypeEx_Blur = "blur"
   #PB_EventTypeEx_Cancel = "cancel"
@@ -88,8 +89,8 @@
   
   Declare.s EventTypeEx() 
   
-  Declare Bind(Gadget, Callback, EventType.s = "")
-  Declare Unbind(Gadget, Callback, EventType.s = "")
+  Declare Bind(Gadget, Callback, EventType.s = #PB_EventTypeEx_All)
+  Declare Unbind(Gadget, Callback, EventType.s = #PB_EventTypeEx_All)
   
 EndDeclareModule
 
@@ -113,9 +114,9 @@ Module GadgetEventEx
     ! return spider.event.eventTypeEx;
   EndProcedure
   
-  Procedure Bind(Gadget, Callback, EventType.s = "")
+  Procedure Bind(Gadget, Callback, EventType.s = #PB_EventTypeEx_All)
     
-    If EventType = "" : EventType = GetAllEvents(Gadget) : EndIf
+    If EventType = #PB_EventTypeEx_All : EventType = GetAllEvents(Gadget) : EndIf
     
     !	var gadget = spider_GadgetID(v_gadget).gadget;
     !	if (gadget.id == "") gadget = dojo.query(gadget);
@@ -133,9 +134,9 @@ Module GadgetEventEx
     
   EndProcedure
   
-  Procedure Unbind(Gadget, Callback, EventType.s = "")
+  Procedure Unbind(Gadget, Callback, EventType.s = #PB_EventTypeEx_All)
     
-    If EventType = "" : EventType = GetAllEvents(Gadget) : EndIf
+    If EventType = #PB_EventTypeEx_All : EventType = GetAllEvents(Gadget) : EndIf
     
     !	var gadget = spider_GadgetID(v_gadget).gadget;
     !	if (gadget.id == "") gadget = dojo.query(gadget);

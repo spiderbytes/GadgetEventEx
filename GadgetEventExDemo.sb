@@ -2,22 +2,34 @@
 
 EnableExplicit
 
+Enumeration
+  #Window
+  #StringGadget
+  #TextGadget
+  #ButtonGadget
+EndEnumeration
+
 Procedure HandleGadgetEventEx(e)
   
-  Debug "Event " + Str(ElapsedMilliseconds())
+  Select EventGadget()
+    Case #StringGadget
+      Debug "Event from #StringGadget"
+    Case #TextGadget
+      Debug "Event from #TextGadget"
+    Case #ButtonGadget
+      Debug "Event from #ButtonGadget"
+    Default
+      Debug "Event from ???"
+  EndSelect
+  
   Debug "EventGadget(): " + EventGadget()
   Debug "EventTypeEx(): " + GadgetEventEx::EventTypeEx()
   Debug "-----"
   
 EndProcedure
 
-Enumeration
-  #Window
-  #StringGadget
-  #TextGadget
-EndEnumeration
 
-OpenWindow(#Window, 0, 0, 512, 512, "GadgetEventExDemo", #PB_Window_SystemMenu | #PB_Window_ScreenCentered)
+OpenWindow(#Window, 0, 0, 300, 300, "GadgetEventExDemo", #PB_Window_SystemMenu | #PB_Window_ScreenCentered)
 
 ; -------------------
 
@@ -31,10 +43,19 @@ GadgetEventEx::Bind(#StringGadget, @HandleGadgetEventEx())
 
 TextGadget(#TextGadget, 10, 50, 100, 20, "TextGadget")
 
-; bind all possible events for a TextGadget:
+; bind all possible events for a TextGadget (you can also use #PB_EventTypeEx_All):
 
-GadgetEventEx::Bind(#TextGadget, @HandleGadgetEventEx())
+GadgetEventEx::Bind(#TextGadget, @HandleGadgetEventEx(), GadgetEventEx::#PB_EventTypeEx_All)
 
 ; unbind MouseMove- and PointerMove-Events:
 
 GadgetEventEx::Unbind(#TextGadget, @HandleGadgetEventEx(), GadgetEventEx::#PB_EventTypeEx_Mousemove + " " + GadgetEventEx::#PB_EventTypeEx_Pointermove)
+
+; -------------------
+
+ButtonGadget(#ButtonGadget, 10, 80, 100, 25, "ButtonGadget")
+
+; bind left- and right-click events for the ButtonGadget:
+
+GadgetEventEx::Bind(#ButtonGadget, @HandleGadgetEventEx(), GadgetEventEx::#PB_EventTypeEx_Click + " " + GadgetEventEx::#PB_EventTypeEx_Contextmenu)
+
