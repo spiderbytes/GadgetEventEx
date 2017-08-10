@@ -106,7 +106,7 @@ Module GadgetEventEx
     !     if (key.slice(2)) result.push(key.slice(2));
     !   }
     ! }
-    ! return result.join(' ').toLowerCase();
+    ! return result.join("|").toLowerCase();
     
   EndProcedure
   
@@ -118,10 +118,12 @@ Module GadgetEventEx
     
     If EventType = #PB_EventTypeEx_All : EventType = GetAllEvents(Gadget) : EndIf
     
+    Debug EventType
+    
     !	var gadget = spider_GadgetID(v_gadget).gadget;
     !	if (gadget.id == "") gadget = dojo.query(gadget);
     
-    ! v_eventtype.split(" ").forEach(function(eventtype) {
+    ! v_eventtype.split("|").forEach(function(eventtype) {
     !   var handle = gadget.on(eventtype, function(e) {
     !     e.stopPropagation();
     !     e.preventDefault();
@@ -141,7 +143,7 @@ Module GadgetEventEx
     !	var gadget = spider_GadgetID(v_gadget).gadget;
     !	if (gadget.id == "") gadget = dojo.query(gadget);
     
-    ! v_eventtype.split(" ").forEach(function(eventtype) {
+    ! v_eventtype.split("|").forEach(function(eventtype) {
     !   var handle = $(gadget).data(eventtype + "_handle");
     !   handle.remove();
     ! });
