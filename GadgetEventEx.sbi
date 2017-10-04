@@ -145,7 +145,7 @@ Module GadgetEventEx
     
     ! v_eventtype.split("|").forEach(function(eventtype) {
     !   var handle = $(gadget).data(eventtype + "_handle");
-    !   handle.remove();
+    !   if (handle) handle.remove();
     ! });
     
   EndProcedure
